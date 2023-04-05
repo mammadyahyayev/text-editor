@@ -1,0 +1,3 @@
+class TextComponent extends Component {
+
+}

@@ -1,0 +1,1 @@
+class LinkComponent extends Component {}

@@ -1,17 +1,9 @@
-class UUIDGenerator {
-  private static readonly letters: string = "abcdefghijklmnopqrstuwxvyz";
+import { UUIDGenerator } from "../src/uuidGenerator";
 
-  public static generateUUID(): string {
-    let uuid: string = "";
-
-    while (uuid.length < 20) {
-      const min = 0;
-      const max = UUIDGenerator.letters.length;
-      const randNum = Math.floor(Math.random() * (max - min + 1)) + min;
-      uuid += UUIDGenerator.letters[randNum];
-    }
-
-    return uuid;
-  }
-}
-
+describe("testing UUIDGenerator", () => {
+  test("UUID len should be 20 and not empty", () => {
+    const uuid: string = UUIDGenerator.generateUUID();
+    expect(uuid).not.toBeFalsy();
+    expect(uuid.length).toBe(20);
+  });
+});

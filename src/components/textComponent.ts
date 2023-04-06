@@ -1,3 +1,3 @@
-class TextComponent extends Component {
+import { BlockComponent } from "./blockComponent";
 
-}
+export class TextComponent extends BlockComponent {}

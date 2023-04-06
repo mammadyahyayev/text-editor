@@ -1,1 +1,3 @@
-class LinkComponent extends Component {}
+import { InlineBlockComponent } from "./inlineBlockComponent";
+
+class LinkComponent extends InlineBlockComponent {}

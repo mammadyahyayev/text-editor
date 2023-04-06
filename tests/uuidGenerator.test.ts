@@ -1,4 +1,4 @@
-import { UUIDGenerator } from "../src/uuidGenerator";
+import { UUIDGenerator } from "../src/utils/uuidGenerator";
 
 describe("testing UUIDGenerator", () => {
   test("UUID len should be 20 and not empty", () => {

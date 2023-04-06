@@ -1,20 +1,20 @@
-class Component {
+export class Component {
   private uuid: string;
   private name: string;
 
-  public get getName(): string {
+  public getName(): string {
     return this.name;
   }
 
-  public set setName(name: string) {
+  public setName(name: string) {
     this.name = name;
   }
 
-  public get getUUID(): string {
+  public getUUID(): string {
     return this.uuid;
   }
 
-  public set setUUID(uuid: string) {
+  public setUUID(uuid: string) {
     this.uuid = uuid;
   }
 }

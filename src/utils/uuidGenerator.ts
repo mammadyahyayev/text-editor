@@ -7,7 +7,7 @@ export class UUIDGenerator {
     while (uuid.length < 20) {
       const min = 0;
       const max = UUIDGenerator.letters.length;
-      const randNum = Math.floor(Math.random() * (max - min + 1)) + min;
+      const randNum = Math.floor(Math.random() * (max - min)) + min;
       uuid += UUIDGenerator.letters[randNum];
     }
 

@@ -10,3 +10,6 @@ class App {
     console.log(text.getName(), text.getUUID())
   }
 }
+
+const app = new App()
+app.execute()

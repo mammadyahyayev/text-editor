@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "module": "commonjs",
+    "target": "ES5",
+    "outDir": "build",
+    "rootDir": "src"
+  },
+  "exclude": ["node_modules", "**/*.test.ts"]
+}

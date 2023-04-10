@@ -7,19 +7,15 @@
 }
 
 body {
-  background-color: rgb(240, 235, 235);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .editor {
-  background-color: white;
   width: 40%;
-  height: 100vh;
   margin: 4em 2em 2em 1em;
   padding: 1em;
-  box-shadow: 1px 2px 3px #ccc;
 }
 
 .header {

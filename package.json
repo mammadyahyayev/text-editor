@@ -7,7 +7,7 @@
     "test": "tests"
   },
   "scripts": {
-    "serve": "webpack-dev-server",
+    "start": "webpack-dev-server",
     "build": "webpack",
     "watch": "npx tsc -w",
     "test": "jest ./tests --runInBand"

@@ -1,15 +1,21 @@
 import { TextComponent } from "./components/textComponent";
-import { UUIDGenerator } from "./utils/uuidGenerator";
 
-class App {
-  execute(): void {
-    const text = new TextComponent();
-    text.name  = "Text";
-    text.uuid = UUIDGenerator.generateUUID();
+//TODO: Reasearch about data- attributes in html, how to define them in TS
 
-    console.log(text.name, text.uuid)
-  }
-}
+// DOM Elements
+const editorEl = document.getElementById("editor") as HTMLDivElement;
+const addBlockBtn = document.getElementById(
+  "add-block-btn"
+) as HTMLButtonElement;
 
-const app = new App()
-app.execute()
+addBlockBtn.addEventListener("click", () => {
+  // const textElement = document.createElement("p");
+  // textElement.textContent = "This is paragraph";
+  // textElement.classList.add("paragraph");
+  // textElement.contentEditable = "true";
+
+  const textComponent = new TextComponent();
+  const textElement = textComponent.create("p")
+
+  editorEl.appendChild(textElement);
+});

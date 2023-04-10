@@ -8,43 +8,15 @@
     <title>Text Editor</title>
   </head>
   <body>
-    <div class="editor">
-      <div class="header header1">This is header1</div>
-      <div class="header header2">This is header2</div>
-      <div class="header header3">This is header3</div>
-      <div class="header header4">This is header4</div>
-      <div class="header header5">This is header5</div>
-      <div class="header header6">This is header6</div>
+    <header class="article-header"></header>
 
-      <p class="paragraph" contenteditable="true">
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eum, ea! Vitae
-        et similique voluptatum, nulla odit aperiam fugit? Alias distinctio
-        sequi cumque in dolore saepe repellat tempora? Qui sunt laboriosam at
-        voluptatum officia velit maxime et aut odio, natus incidunt.
-      </p>
-
-      <p class="paragraph">
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eum, ea! Vitae
-        et similique voluptatum, nulla odit aperiam fugit? Alias distinctio
-        sequi cumque in dolore saepe repellat tempora? Qui sunt laboriosam at
-        voluptatum officia velit maxime et aut odio, natus incidunt.
-      </p>
-
-      <p class="paragraph">
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eum, ea! Vitae
-        et similique voluptatum, nulla odit aperiam fugit? Alias distinctio
-        sequi cumque in dolore saepe repellat tempora? Qui sunt laboriosam at
-        voluptatum officia velit maxime et aut odio, natus incidunt.
-      </p>
-
-      <p class="paragraph">
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eum, ea! Vitae
-        et similique voluptatum, nulla odit aperiam fugit? Alias distinctio
-        sequi cumque in dolore saepe repellat tempora? Qui sunt laboriosam at
-        voluptatum officia velit maxime et aut odio, natus incidunt.
-      </p>
-
-      <a href="#" class="link">Click me</a>
+    <div class="content-area">
+      <div class="editor-tools">
+        <button id="add-block-btn" class="btn">Create Paragraph</button>
+      </div>
+      <div class="editor" id="editor">
+        <div class="header header1">This is header1</div>
+      </div>
     </div>
 
     <script src="./bundle.js" type="module"></script>

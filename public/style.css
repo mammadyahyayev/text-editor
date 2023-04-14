@@ -7,9 +7,34 @@
 }
 
 .article-header {
-  height: 50px;
-  border: 1px solid red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   margin: 0 auto;
+  background-color: crimson;
+  color: white;
+}
+
+.article-header .header-block {
+  padding: 1em;
+  border-left: 1px solid #f1ecec;
+  border-right: 1px solid #f1ecec;
+}
+
+.article-header .header-block:first-child {
+  border-right: none;
+}
+
+.header-block .block-title {
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: .6em;
+}
+
+.article-header .format {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .content-area {
@@ -19,7 +44,7 @@
 }
 
 .editor {
-  border: 1px solid red;
+  border: 1px solid #ccc;
   width: 1000px;
   margin: 1em auto;
   padding: 1em;

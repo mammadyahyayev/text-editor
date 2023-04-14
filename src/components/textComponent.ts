@@ -1,4 +1,4 @@
-import { HtmlTag } from "../model/HtmlTag";
+import { HtmlTag } from "../model/htmlTag";
 import { DomApi } from "../utils/domApi";
 import { BlockComponent } from "./blockComponent";
 

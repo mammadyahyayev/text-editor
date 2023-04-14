@@ -1,4 +1,4 @@
-import { HtmlTag } from "../model/HtmlTag";
+import { HtmlTag } from "../model/htmlTag";
 
 export class DomApi {
   public static createElement(tag: HtmlTag): HTMLElement {

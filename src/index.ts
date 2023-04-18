@@ -1,4 +1,6 @@
 import { TextComponent } from "./components/textComponent";
+import { HtmlEvent } from "./model/htmlEvent";
+import { HtmlTag } from "./model/htmlTag";
 
 // DOM Elements
 const editorEl = document.getElementById("editor") as HTMLDivElement;
@@ -6,9 +8,17 @@ const insertTextElementBtn = document.getElementById(
   "insert-text-btn"
 ) as HTMLButtonElement;
 
-insertTextElementBtn.addEventListener("click", () => {
-  const textComponent = new TextComponent();
-  const textElement = textComponent.create("p")
+const paragraph = document.querySelector(".paragraph") as HTMLParagraphElement;
 
+insertTextElementBtn.addEventListener("click", () => {
+  const textComponent = new TextComponent(HtmlTag.P, addTextIntoEditor);
+  const textElement = textComponent.getHtmlElement();
   editorEl.appendChild(textElement);
 });
+
+function addTextIntoEditor() {
+  const textComponent = new TextComponent(HtmlTag.P, addTextIntoEditor);
+  const textElement = textComponent.getHtmlElement();
+  editorEl.appendChild(textElement);
+  textElement.focus();
+}

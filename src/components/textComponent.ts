@@ -8,7 +8,13 @@ export class TextComponent extends BlockComponent {
 
   private textEl: HTMLParagraphElement;
 
-  public create(htmlElement: string, editable = true): HTMLParagraphElement {
+  constructor(tag: HtmlTag, callback: Function) {
+    super();
+
+    this.create(tag, callback);
+  }
+
+  private create(htmlElement: HtmlTag, callback: Function, editable = true): void {
     this.isValidHTMLElement(htmlElement);
 
     this.textEl = DomApi.createElement(HtmlTag.P) as HTMLParagraphElement;
@@ -16,11 +22,16 @@ export class TextComponent extends BlockComponent {
     this.textEl.setAttribute("data-placeholder", "Enter your text...");
     this.textEl.contentEditable = editable ? "true" : "false";
 
-    return this.textEl;
+    this.textEl.addEventListener("keydown", (e: KeyboardEvent) => {
+      if(e.code == "Enter") {
+        e.preventDefault();
+        callback();
+      }
+    });
   }
 
-  public addEvent(): void {
-    
+  public getHtmlElement(): HTMLParagraphElement {
+    return this.textEl;
   }
 
   private isValidHTMLElement(htmlElement: string): boolean {

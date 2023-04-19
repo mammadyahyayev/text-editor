@@ -1,6 +1,13 @@
+import { UUIDGenerator } from "../utils/uuidGenerator";
+
 export class Component {
   private _uuid: string;
   private _name: string;
+  private _htmlElement: HTMLElement;
+
+  constructor() {
+    this._uuid = UUIDGenerator.generateUUID();
+  }
 
   public get name(): string {
     return this._name;
@@ -14,7 +21,11 @@ export class Component {
     return this._uuid;
   }
 
-  public set uuid(uuid: string) {
-    this._uuid = uuid;
+  public get htmlElement(): HTMLElement {
+    return this._htmlElement;
+  }
+
+  public set htmlElement(htmlElement: HTMLElement) {
+    this._htmlElement = htmlElement;
   }
 }

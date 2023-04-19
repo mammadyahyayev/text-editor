@@ -1,3 +1,4 @@
+import { IllegalArgumentException } from "../exception/illegalArgumentException";
 import { HtmlTag } from "../model/htmlTag";
 
 export class DomApi {

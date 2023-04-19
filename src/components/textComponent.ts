@@ -6,32 +6,18 @@ export class TextComponent extends BlockComponent {
   private static readonly SUPPORTED_TEXT_ELEMENTS: string[] = ["p"];
   private static readonly TEXT_CLASSNAME = "paragraph";
 
-  private textEl: HTMLParagraphElement;
-
-  constructor(tag: HtmlTag, callback: Function) {
+  constructor(tag: HtmlTag) {
     super();
 
-    this.create(tag, callback);
+    this.create(tag);
   }
 
-  private create(htmlElement: HtmlTag, callback: Function, editable = true): void {
+  private create(htmlElement: HtmlTag, editable = true): void {
     this.isValidHTMLElement(htmlElement);
 
-    this.textEl = DomApi.createElement(HtmlTag.P) as HTMLParagraphElement;
-    this.textEl.className = TextComponent.TEXT_CLASSNAME;
-    this.textEl.setAttribute("data-placeholder", "Enter your text...");
-    this.textEl.contentEditable = editable ? "true" : "false";
-
-    this.textEl.addEventListener("keydown", (e: KeyboardEvent) => {
-      if(e.code == "Enter") {
-        e.preventDefault();
-        callback();
-      }
-    });
-  }
-
-  public getHtmlElement(): HTMLParagraphElement {
-    return this.textEl;
+    this.htmlElement = DomApi.createElement(htmlElement) as HTMLParagraphElement;
+    this.htmlElement.className = TextComponent.TEXT_CLASSNAME;
+    this.htmlElement.contentEditable = editable ? "true" : "false";
   }
 
   private isValidHTMLElement(htmlElement: string): boolean {

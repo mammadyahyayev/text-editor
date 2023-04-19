@@ -1,3 +1,6 @@
+/**
+ * @jest-environment jsdom
+ */
 import { UUIDGenerator } from "../src/utils/uuidGenerator";
 
 describe("testing UUIDGenerator", () => {

@@ -31,7 +31,6 @@ describe("testing Editor Tree", () => {
     editor.addComponent(textComponent);
 
     expect(editor.size).toBe(1);
-    expect(editor.currentComponent).toBe(textComponent);
     expect(textComponent.htmlElement.classList.toString()).toBe("paragraph current")
   });
 });

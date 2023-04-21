@@ -30,33 +30,48 @@ export class Editor implements Tree {
     this.defaultComponent = new TextComponent(HtmlTag.P);
   }
 
-  public addComponent(component: Component): void {
+  first(): Component | null {
+    if (this.components.length == 0) {
+      return null;
+    }
+
+    return this.components[0];
+  }
+
+  last(): Component | null {
+    if (this.components.length == 0) {
+      return null;
+    }
+
+    return this.components[this.components.length - 1];
+  }
+
+  addComponent(component: Component): void {
     if (!component) {
       throw new IllegalArgumentException("component cannot be null!");
     }
 
-    this.components.push(component);
-    this.editorHtmlElement.appendChild(component.htmlElement);
+    this._currentComponent?.htmlElement.classList.remove("current");
+
     component.htmlElement.focus();
     component.htmlElement.classList.add("current"); //TODO: Move this lines into component itself to ensure encapsulation
 
     this._currentComponent = component;
+
+    this.components.push(this._currentComponent);
+    this.editorHtmlElement.appendChild(this._currentComponent.htmlElement);
     this._size++;
   }
 
-  public export(): string {
+  export(): string {
     throw new Error("Not implemented!");
   }
 
-  public import(json: string): void {
+  import(json: string): void {
     throw new Error("Not implemented!");
   }
 
-  public get size(): number {
+  size(): number {
     return this._size;
-  }
-
-  public get currentComponent(): Component {
-    return this._currentComponent;
   }
 }

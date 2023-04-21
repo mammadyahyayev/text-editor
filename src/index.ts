@@ -1,6 +1,7 @@
 import { TextComponent } from "./components/textComponent";
 import { HtmlTag } from "./model/htmlTag";
 import { Editor } from "./tree/editor";
+import { EditorFactory } from "./tree/editorFactory";
 
 // DOM Elements
 const insertTextElementBtn = document.getElementById(
@@ -8,9 +9,16 @@ const insertTextElementBtn = document.getElementById(
 ) as HTMLButtonElement;
 
 function start(): void {
-  const editor = new Editor("editor");
+  const editor = EditorFactory.createEditor("editor");
   const textComponent = new TextComponent(HtmlTag.P);
   editor.addComponent(textComponent);
 }
+
+insertTextElementBtn.addEventListener("click", () => {
+  const editor = EditorFactory.getEditor();
+  const textComponent = new TextComponent(HtmlTag.P);
+  editor.addComponent(textComponent);
+  console.log(editor.size())
+});
 
 start();

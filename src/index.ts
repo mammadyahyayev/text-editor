@@ -17,7 +17,6 @@ insertTextElementBtn.addEventListener("click", () => {
   const editor = EditorFactory.getEditor();
   const textComponent = new TextComponent(HtmlTag.P);
   editor.addComponent(textComponent);
-  console.log(editor.size())
 });
 
 start();

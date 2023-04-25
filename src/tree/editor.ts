@@ -1,5 +1,6 @@
 import { Component } from "../components/component";
 import { IllegalArgumentException } from "../exception/illegalArgumentException";
+import { logger } from "../utils/logger";
 import { Tree } from "./tree";
 
 export class Editor implements Tree {
@@ -24,6 +25,7 @@ export class Editor implements Tree {
     }
 
     this.editorHtmlElement = editorEl;
+    this.click();
   }
 
   first(): Component | null {
@@ -61,5 +63,32 @@ export class Editor implements Tree {
 
   size(): number {
     return this._size;
+  }
+
+  click(): void {
+    this.editorHtmlElement.addEventListener("click", (e) => {
+      const clickedElement = e.target as HTMLElement;
+      const clickedComponent = this.components.find(
+        (c) => c.uuid == clickedElement.id
+      );
+
+      logger.debug("Clicked element:", clickedElement);
+      logger.debug("Clicked component:", clickedComponent);
+
+      if (clickedComponent && clickedComponent == this._currentComponent) {
+        return;
+      }
+
+      if (clickedComponent) {
+        this._currentComponent.htmlElement.classList.remove("current");
+
+        clickedComponent.htmlElement.focus();
+        clickedComponent.htmlElement.classList.add("current");
+
+        this._currentComponent = clickedComponent;
+      }
+
+      logger.debug("Current component: ", this._currentComponent);
+    });
   }
 }

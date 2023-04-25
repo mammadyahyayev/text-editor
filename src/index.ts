@@ -1,6 +1,5 @@
 import { TextComponent } from "./components/textComponent";
 import { HtmlTag } from "./model/htmlTag";
-import { Editor } from "./tree/editor";
 import { EditorFactory } from "./tree/editorFactory";
 
 // DOM Elements

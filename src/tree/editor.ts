@@ -1,12 +1,9 @@
 import { Component } from "../components/component";
-import { TextComponent } from "../components/textComponent";
 import { IllegalArgumentException } from "../exception/illegalArgumentException";
-import { HtmlTag } from "../model/htmlTag";
 import { Tree } from "./tree";
 
 export class Editor implements Tree {
   private readonly components: Component[] = [];
-  private readonly defaultComponent: TextComponent;
   private readonly editorHtmlElement: HTMLDivElement;
 
   private _currentComponent: Component;
@@ -27,7 +24,6 @@ export class Editor implements Tree {
     }
 
     this.editorHtmlElement = editorEl;
-    this.defaultComponent = new TextComponent(HtmlTag.P);
   }
 
   first(): Component | null {
@@ -61,14 +57,6 @@ export class Editor implements Tree {
     this.components.push(this._currentComponent);
     this.editorHtmlElement.appendChild(this._currentComponent.htmlElement);
     this._size++;
-  }
-
-  export(): string {
-    throw new Error("Not implemented!");
-  }
-
-  import(json: string): void {
-    throw new Error("Not implemented!");
   }
 
   size(): number {

@@ -1,3 +1,4 @@
+import { StyleType } from "../model/styleType";
 import { UUIDGenerator } from "../utils/uuidGenerator";
 
 export class Component {
@@ -27,5 +28,9 @@ export class Component {
 
   public set htmlElement(htmlElement: HTMLElement) {
     this._htmlElement = htmlElement;
+  }
+
+  applyStyle(styleType: StyleType, value: StyleType): void {
+    this._htmlElement.style.setProperty(styleType, value);
   }
 }

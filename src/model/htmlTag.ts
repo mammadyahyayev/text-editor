@@ -4,4 +4,5 @@ export enum HtmlTag {
   Div = "div",
   Span = "span",
   Img = "img",
+  Strong = "strong"
 }

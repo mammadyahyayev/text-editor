@@ -26,6 +26,8 @@ export class Editor implements Tree {
 
     this.editorHtmlElement = editorEl;
     this.click();
+    this.arrowKeywords();
+    this.enterKeyword();
   }
 
   first(): Component | null {
@@ -61,19 +63,24 @@ export class Editor implements Tree {
     this._size++;
   }
 
+  findComponent(componentId: string): Component | undefined {
+    return this.components.find((c) => c.uuid == componentId);
+  }
+
+  getFocusedComponent(): Component {
+    return this._currentComponent;
+  }
+
   size(): number {
     return this._size;
   }
 
-  click(): void {
+  private click(): void {
     this.editorHtmlElement.addEventListener("click", (e) => {
       const clickedElement = e.target as HTMLElement;
       const clickedComponent = this.components.find(
         (c) => c.uuid == clickedElement.id
       );
-
-      logger.debug("Clicked element:", clickedElement);
-      logger.debug("Clicked component:", clickedComponent);
 
       if (clickedComponent && clickedComponent == this._currentComponent) {
         return;
@@ -87,8 +94,22 @@ export class Editor implements Tree {
 
         this._currentComponent = clickedComponent;
       }
+    });
+  }
 
-      logger.debug("Current component: ", this._currentComponent);
+  private arrowKeywords(): void {
+    this.editorHtmlElement.addEventListener("keydown", (e) => {
+      if (e.code == "ArrowUp") {
+        logger.debug("keydown event: ", e);
+      }
+    });
+  }
+
+  private enterKeyword(): void {
+    this.editorHtmlElement.addEventListener("keydown", (e) => {
+      if (e.key == "Enter" && !e.shiftKey) {
+        e.preventDefault();
+      }
     });
   }
 }

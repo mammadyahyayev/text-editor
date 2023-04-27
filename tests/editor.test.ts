@@ -30,7 +30,7 @@ describe("testing Editor Tree", () => {
     const editor = new Editor("editor");
     editor.addComponent(textComponent);
 
-    expect(editor.size).toBe(1);
+    expect(editor.size()).toBe(1);
     expect(textComponent.htmlElement.classList.toString()).toBe("paragraph current")
   });
 });

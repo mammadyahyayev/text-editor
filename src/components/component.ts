@@ -33,4 +33,12 @@ export class Component {
   applyStyle(styleType: StyleType, value: StyleType): void {
     this._htmlElement.style.setProperty(styleType, value);
   }
+
+  copy(): Component {
+    const copiedComponent = new Component();
+    copiedComponent._uuid = this._uuid;
+    copiedComponent._name = this._name;
+    copiedComponent._htmlElement = this._htmlElement;
+    return copiedComponent;
+  }
 }

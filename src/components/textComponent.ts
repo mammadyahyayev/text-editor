@@ -12,12 +12,12 @@ export class TextComponent extends BlockComponent {
     this.create(tag);
   }
 
-  private create(htmlElement: HtmlTag, editable = true): void {
+  private create(htmlElement: HtmlTag): void {
     this.isValidHTMLElement(htmlElement);
 
     this.htmlElement = DomApi.createElement(htmlElement) as HTMLParagraphElement;
     this.htmlElement.className = TextComponent.TEXT_CLASSNAME;
-    this.htmlElement.contentEditable = editable ? "true" : "false";
+    // this.htmlElement.contentEditable = editable ? "true" : "false";
     this.htmlElement.id = this.uuid;
   }
 

@@ -1,48 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Text Editor</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="style.css" />
-  <title>Text Editor</title>
-</head>
-
-<body>
-  <header class="article-header">
-    <div class="header-block">
-      <p class="block-title">Operations</p>
-      <div class="operations">
-        <button id="insert-text-btn" class="btn">Insert Text</button>
-      </div>
-    </div>
-
-    <div class="header-block">
-      <p class="block-title">Format Text</p>
-      <div class="format">
-        <div class="text-format">
-          <button id="bold-text-btn" class="btn">Bold Text</button>
-          <button id="italic-text-btn" class="btn">Italic Text</button>
-          <button id="underline-text-btn" class="btn">Underline Text</button>
-        </div>
-
-        <div class="alignments">
-          <button id="left-align-text-btn" class="btn">Left Align</button>
-          <button id="center-align-text-btn" class="btn">Center Align</button>
-          <button id="right-align-text-btn" class="btn">Right Align</button>
+  <body>
+    <header class="article-header">
+      <div class="header-block">
+        <p class="block-title">Operations</p>
+        <div class="operations">
+          <button id="insert-text-btn" class="btn">Insert Text</button>
         </div>
       </div>
+
+      <div class="header-block">
+        <p class="block-title">Format Text</p>
+        <div class="format">
+          <div class="text-format">
+            <button id="bold-text-btn" class="btn">Bold Text</button>
+            <button id="italic-text-btn" class="btn">Italic Text</button>
+            <button id="underline-text-btn" class="btn">Underline Text</button>
+          </div>
+
+          <div class="alignments">
+            <button id="left-align-text-btn" class="btn">Left Align</button>
+            <button id="center-align-text-btn" class="btn">Center Align</button>
+            <button id="right-align-text-btn" class="btn">Right Align</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="header-styles"></div>
+    </header>
+
+    <div class="content-area">
+      <div class="editor" id="editor" />
     </div>
 
-    <div class="header-styles"></div>
-  </header>
-
-  <div class="content-area">
-    <div class="editor" id="editor" />
-  </div>
-
-  <script src="./bundle.js" type="module"></script>
-</body>
-
+    <script src="../dist/hot.bundle.js" type="module"></script>
+  </body>
 </html>

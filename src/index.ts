@@ -37,17 +37,17 @@ start();
 leftAlignTextElementBtn.addEventListener("click", () => {
   const editor = EditorFactory.getEditor();
   const focusedComponent = editor.getFocusedComponent();
-  focusedComponent.applyStyle(StyleTypes.TEXT_ALIGN, AlignmentTypes.LEFT)
+  focusedComponent.applyStyle(StyleTypes.TEXT_ALIGN, AlignmentTypes.LEFT);
 });
 
 centerAlignTextElementBtn.addEventListener("click", () => {
   const editor = EditorFactory.getEditor();
   const focusedComponent = editor.getFocusedComponent();
-  focusedComponent.applyStyle(StyleTypes.TEXT_ALIGN, AlignmentTypes.CENTER)
+  focusedComponent.applyStyle(StyleTypes.TEXT_ALIGN, AlignmentTypes.CENTER);
 });
 
 rightAlignTextElementBtn.addEventListener("click", () => {
   const editor = EditorFactory.getEditor();
   const focusedComponent = editor.getFocusedComponent();
-  focusedComponent.applyStyle(StyleTypes.TEXT_ALIGN, AlignmentTypes.RIGHT)
+  focusedComponent.applyStyle(StyleTypes.TEXT_ALIGN, AlignmentTypes.RIGHT);
 });

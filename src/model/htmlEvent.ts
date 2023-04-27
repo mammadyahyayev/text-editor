@@ -1,3 +1,3 @@
 export enum HtmlEvent {
-  Click = "click",
+  CLICK = "click",
 }

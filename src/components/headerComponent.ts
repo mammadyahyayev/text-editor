@@ -11,9 +11,6 @@ export class HeaderComponent extends BlockComponent {
     h1: "header1",
     h2: "header2",
     h3: "header3",
-    h4: "header4",
-    h5: "header5",
-    h6: "header6",
   };
 
   constructor(tag: HtmlTags) {
@@ -26,7 +23,7 @@ export class HeaderComponent extends BlockComponent {
     this.isValidHTMLElement(htmlTag);
 
     this.htmlElement = DomApi.createElement(htmlTag) as HTMLHeadingElement;
-    this.htmlElement.className = HeaderComponent.HEADER_ELEMENTS[htmlTag];
+    this.htmlElement.className = "header " + HeaderComponent.HEADER_ELEMENTS[htmlTag];
     this.htmlElement.id = this.uuid;
   }
 

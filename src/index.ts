@@ -24,9 +24,6 @@ const rightAlignTextElementBtn = document.getElementById(
 const h1ElementBtn = document.getElementById("h1-btn") as HTMLButtonElement;
 const h2ElementBtn = document.getElementById("h2-btn") as HTMLButtonElement;
 const h3ElementBtn = document.getElementById("h3-btn") as HTMLButtonElement;
-const h4ElementBtn = document.getElementById("h4-btn") as HTMLButtonElement;
-const h5ElementBtn = document.getElementById("h5-btn") as HTMLButtonElement;
-const h6ElementBtn = document.getElementById("h6-btn") as HTMLButtonElement;
 
 function start(): void {
   const editor = EditorFactory.createEditor("editor");
@@ -78,22 +75,4 @@ h3ElementBtn.addEventListener("click", () => {
   const h3Component = new HeaderComponent(HeadingTags.H3);
   const editor = EditorFactory.getEditor();
   editor.replaceComponent(h3Component, editor.getFocusedComponent());
-});
-
-h4ElementBtn.addEventListener("click", () => {
-  const h4Component = new HeaderComponent(HeadingTags.H4);
-  const editor = EditorFactory.getEditor();
-  editor.replaceComponent(h4Component, editor.getFocusedComponent());
-});
-
-h5ElementBtn.addEventListener("click", () => {
-  const h5Component = new HeaderComponent(HeadingTags.H5);
-  const editor = EditorFactory.getEditor();
-  editor.replaceComponent(h5Component, editor.getFocusedComponent());
-});
-
-h6ElementBtn.addEventListener("click", () => {
-  const h6Component = new HeaderComponent(HeadingTags.H6);
-  const editor = EditorFactory.getEditor();
-  editor.replaceComponent(h6Component, editor.getFocusedComponent());
 });

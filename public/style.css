@@ -63,42 +63,28 @@
 
 .header {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0.4em 0 0.3em;
 }
 
 .header1 {
-  font-size: 44px;
-  font-weight: 1000;
+  font-size: 40px;
+  font-weight: 700;
 }
 
 .header2 {
-  font-size: 38px;
-  font-weight: 800;
-}
-
-.header3 {
-  font-size: 34px;
+  font-size: 32px;
   font-weight: 600;
 }
 
-.header4 {
-  font-size: 28px;
-  font-weight: 400;
-}
-
-.header5 {
+.header3 {
   font-size: 24px;
-  font-weight: 450;
-}
-
-.header6 {
-  font-size: 20px;
-  font-weight: 400;
+  font-weight: 500;
 }
 
 .paragraph {
   margin: 0;
-  margin-top: 1.8em;
-  font-weight: 200;
+  margin-bottom: 1.25em;
+  font-weight: 350;
   outline: none;
   font-size: 16px;
   min-height: 23px;

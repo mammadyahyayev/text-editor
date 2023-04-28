@@ -32,6 +32,7 @@ export class Editor implements Tree {
     this.click();
     this.arrowKeywords();
     this.enterKeyword();
+    this.blockDragging();
   }
 
   first(): Component | null {
@@ -225,6 +226,12 @@ export class Editor implements Tree {
         selection?.removeAllRanges();
         selection?.addRange(range);
       }
+    });
+  }
+
+  private blockDragging(): void {
+    this.editorHtmlElement.addEventListener("dragstart", (e) => {
+      e.preventDefault();
     });
   }
 }

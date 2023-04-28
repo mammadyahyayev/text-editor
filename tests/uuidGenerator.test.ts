@@ -1,12 +1,12 @@
 /**
  * @jest-environment jsdom
  */
-import { UUIDGenerator } from "../src/utils/uuidGenerator";
+import { UuidGenerator } from "../src/utils/uuidGenerator";
 
 describe("testing UUIDGenerator", () => {
-  test("UUID len should be 20 and not empty", () => {
-    const uuid: string = UUIDGenerator.generateUUID();
+  test("UUID length should be 20 and not empty", () => {
+    const uuid: string = UuidGenerator.generateUuid(6);
     expect(uuid).not.toBeFalsy();
-    expect(uuid.length).toBe(20);
+    expect(uuid.length).toBe(6);
   });
 });

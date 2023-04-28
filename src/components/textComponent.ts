@@ -17,7 +17,6 @@ export class TextComponent extends BlockComponent {
 
     this.htmlElement = DomApi.createElement(htmlElement) as HTMLParagraphElement;
     this.htmlElement.className = TextComponent.TEXT_CLASSNAME;
-    // this.htmlElement.contentEditable = editable ? "true" : "false";
     this.htmlElement.id = this.uuid;
   }
 

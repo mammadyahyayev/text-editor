@@ -119,6 +119,23 @@ export class Editor implements Tree {
     this._size++;
   }
 
+  replaceComponent(newComponent: Component, oldComponent: Component): void {
+    const index = this.components.findIndex(
+      (component) => component.uuid == oldComponent.uuid
+    );
+
+    if (index == -1) {
+      throw new Error(
+        `Component ${oldComponent.name} isn't exist on components list!`
+      );
+    }
+
+    this.components[index] = newComponent;
+    this.addComponentBeforeCurrent(newComponent);
+    newComponent.htmlElement.textContent = oldComponent.htmlElement.textContent;
+    oldComponent.htmlElement.remove();
+  }
+
   findComponent(componentId: string): Component | undefined {
     return this.components.find((c) => c.uuid == componentId);
   }
@@ -166,7 +183,7 @@ export class Editor implements Tree {
       if (e.key == "Enter" && !e.shiftKey) {
         e.preventDefault();
         const textContent = this._currentComponent.htmlElement.textContent;
-        
+
         if (!textContent) {
           return;
         }
@@ -192,9 +209,11 @@ export class Editor implements Tree {
 
           this.addComponentAfterCurrent(text);
 
-          if(this._previousComponent.htmlElement.textContent) {
-            const prevCompText = this._previousComponent.htmlElement.textContent;
-            this._previousComponent.htmlElement.textContent = prevCompText.substring(0, posRange.begin);
+          if (this._previousComponent.htmlElement.textContent) {
+            const prevCompText =
+              this._previousComponent.htmlElement.textContent;
+            this._previousComponent.htmlElement.textContent =
+              prevCompText.substring(0, posRange.begin);
           }
         }
 

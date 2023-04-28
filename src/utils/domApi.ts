@@ -1,8 +1,8 @@
 import { IllegalArgumentException } from "../exception/illegalArgumentException";
-import { HtmlTag } from "../model/htmlTag";
+import { HtmlTags } from "../model/htmlTag";
 
 export class DomApi {
-  public static createElement(tag: HtmlTag): HTMLElement {
+  public static createElement(tag: HtmlTags): HTMLElement {
     if (!tag) {
       throw new IllegalArgumentException("tag cannot be null or empty");
     }

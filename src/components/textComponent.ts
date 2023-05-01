@@ -12,15 +12,15 @@ export class TextComponent extends BlockComponent {
     this.create(tag);
   }
 
-  private create(htmlElement: HtmlTag): void {
-    this.isValidHTMLElement(htmlElement);
+  override create(htmlTag: HtmlTag): void {
+    this.isValidHtmlElement(htmlTag);
 
-    this.htmlElement = DomApi.createElement(htmlElement) as HTMLParagraphElement;
-    this.htmlElement.className = TextComponent.TEXT_CLASSNAME;
-    this.htmlElement.id = this.uuid;
+    this.html = DomApi.createElement(htmlTag) as HTMLParagraphElement;
+    this.html.className = TextComponent.TEXT_CLASSNAME;
+    this.html.id = this.uuid;
   }
 
-  private isValidHTMLElement(htmlElement: string): boolean {
+  override isValidHtmlElement(htmlElement: string): boolean {
     return TextComponent.SUPPORTED_TEXT_ELEMENTS.includes(htmlElement);
   }
 }

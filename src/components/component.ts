@@ -1,44 +1,87 @@
+// import { StyleType } from "../model/styleType";
+import { IllegalArgumentException } from "../exception/illegalArgumentException";
 import { StyleType } from "../model/styleType";
-import { UUIDGenerator } from "../utils/uuidGenerator";
+import { UuidGenerator } from "../utils/uuidGenerator";
 
 export class Component {
+  private static readonly UUID_LENGTH: number = 5;
+
   private _uuid: string;
-  private _name: string;
-  private _htmlElement: HTMLElement;
+  private _html: HTMLElement;
 
-  constructor() {
-    this._uuid = UUIDGenerator.generateUUID();
-  }
-
-  public get name(): string {
-    return this._name;
-  }
-
-  public set name(name: string) {
-    this._name = name;
+  protected constructor() {
+    this._uuid = UuidGenerator.generateUuid(Component.UUID_LENGTH);
   }
 
   public get uuid(): string {
     return this._uuid;
   }
 
-  public get htmlElement(): HTMLElement {
-    return this._htmlElement;
+  public get html(): HTMLElement {
+    return this._html;
   }
 
-  public set htmlElement(htmlElement: HTMLElement) {
-    this._htmlElement = htmlElement;
-  }
-
-  applyStyle(styleType: StyleType, value: StyleType): void {
-    this._htmlElement.style.setProperty(styleType, value);
+  public set html(html: HTMLElement) {
+    this._html = html.cloneNode() as HTMLElement;
   }
 
   copy(): Component {
-    const copiedComponent = new Component();
-    copiedComponent._uuid = this._uuid;
-    copiedComponent._name = this._name;
-    copiedComponent._htmlElement = this._htmlElement;
-    return copiedComponent;
+    return Object.assign(new Component(), this);
+  }
+
+  addClass(className: string, focus = false): void {
+    if (!className) {
+      throw new IllegalArgumentException("className cannot be null");
+    }
+
+    this._html.classList.add(className);
+
+    if (focus) {
+      this._html.focus();
+    }
+  }
+
+  remove(): void {
+    this._html.remove();
+  }
+
+  removeClass(className: string): void {
+    if (!className) {
+      throw new IllegalArgumentException("className cannot be null");
+    }
+
+    this._html.classList.remove(className);
+  }
+
+  addId(id: string): void {
+    if (!id) {
+      throw new IllegalArgumentException("id cannot be null");
+    }
+
+    this._html.id = id;
+  }
+
+  addStyle(styleType: StyleType, value: StyleType): void {
+    this._html.style.setProperty(styleType, value);
+  }
+
+  get textContent(): string | null {
+    return this._html.textContent;
+  }
+
+  set textContent(text: string | null) {
+    this._html.textContent = text ? text : "";
+  }
+
+  get classList(): string {
+    return this._html.classList.toString();
+  }
+
+  insertAfter(component: Component): void {
+    this._html.insertAdjacentElement("afterend", component._html);
+  }
+
+  insertBefore(component: Component): void {
+    this._html.insertAdjacentElement("beforebegin", component._html);
   }
 }

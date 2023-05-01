@@ -19,15 +19,15 @@ export class HeaderComponent extends BlockComponent {
     this.create(tag);
   }
 
-  private create(htmlTag: HtmlTags): void {
-    this.isValidHTMLElement(htmlTag);
+  override create(htmlTag: HtmlTags): void {
+    this.isValidHtmlElement(htmlTag);
 
-    this.htmlElement = DomApi.createElement(htmlTag) as HTMLHeadingElement;
-    this.htmlElement.className = "header " + HeaderComponent.HEADER_ELEMENTS[htmlTag];
-    this.htmlElement.id = this.uuid;
+    this.html = DomApi.createElement(htmlTag) as HTMLHeadingElement;
+    this.html.className = "header " + HeaderComponent.HEADER_ELEMENTS[htmlTag];
+    this.html.id = this.uuid;
   }
 
-  private isValidHTMLElement(htmlElement: string): boolean {
+  override isValidHtmlElement(htmlElement: string): boolean {
     const keys = Object.keys(HeaderComponent.HEADER_ELEMENTS);
     return keys.includes(htmlElement);
   }

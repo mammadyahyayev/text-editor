@@ -1,5 +1,6 @@
 export enum StyleTypes {
   TEXT_ALIGN = "text-align",
+  FONT_WEIGHT = "font-weight",
 }
 
 export enum AlignmentTypes {
@@ -8,4 +9,8 @@ export enum AlignmentTypes {
   RIGHT = "right",
 }
 
-export type StyleType = StyleTypes | AlignmentTypes;
+export enum FontWeight {
+  BOLD = "bold",
+}
+
+export type StyleType = StyleTypes | AlignmentTypes | FontWeight;

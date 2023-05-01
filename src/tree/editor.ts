@@ -1,20 +1,23 @@
 import { Component } from "../components/component";
 import { TextComponent } from "../components/textComponent";
 import { IllegalArgumentException } from "../exception/illegalArgumentException";
+import { HtmlEvent } from "../model/htmlEvent";
 import { HtmlTag } from "../model/htmlTag";
-import { logger } from "../utils/logger";
 import { SelectionApi } from "../utils/selectionApi";
+import { Command } from "./command";
 import { Tree } from "./tree";
 
 export class Editor implements Tree {
   private readonly components: Component[] = [];
-  private readonly editorHtmlElement: HTMLDivElement;
+  private readonly _editorHtmlElement: HTMLDivElement;
+
+  private static _instance: Editor;
 
   private _previousComponent: Component;
   private _currentComponent: Component;
   private _size: number = 0;
 
-  constructor(editorId: string) {
+  private constructor(editorId: string) {
     if (!editorId && editorId.trim() === "") {
       throw new IllegalArgumentException(
         "Please specify editor element in your HTML file!"
@@ -28,11 +31,17 @@ export class Editor implements Tree {
       );
     }
 
-    this.editorHtmlElement = editorEl;
-    this.click();
-    this.arrowKeywords();
-    this.enterKeyword();
-    this.blockDragging();
+    this._editorHtmlElement = editorEl;
+
+    this.addCommands();
+  }
+
+  static getInstance(editorId: string): Editor {
+    if (!Editor._instance) {
+      Editor._instance = new Editor(editorId);
+    }
+
+    return Editor._instance;
   }
 
   first(): Component | null {
@@ -56,20 +65,18 @@ export class Editor implements Tree {
       throw new IllegalArgumentException("component cannot be null!");
     }
 
-    // this._previousComponent = this._currentComponent?.copy();
+    this.setCurrentComponent(component);
 
-    this._currentComponent?.htmlElement.classList.remove("current");
-
-    component.htmlElement.focus();
-    component.htmlElement.classList.add("current"); //TODO: Move this lines into component itself to ensure encapsulation
-
-    this._currentComponent = component;
-
-    this.components.push(this._currentComponent);
-
-    this.editorHtmlElement.appendChild(this._currentComponent.htmlElement);
-
+    this.components.push(component);
     this._size++;
+
+    this._editorHtmlElement.appendChild(component.html); // TODO: Find good way to append child
+  }
+
+  private setCurrentComponent(component: Component): void {
+    this._currentComponent?.removeClass("current");
+    component.addClass("current", true);
+    this._currentComponent = component;
   }
 
   addComponentBeforeCurrent(component: Component): void {
@@ -79,45 +86,23 @@ export class Editor implements Tree {
 
     this._previousComponent = this._currentComponent.copy();
 
-    this._currentComponent?.htmlElement.classList.remove("current");
+    this.setCurrentComponent(component);
 
-    component.htmlElement.focus();
-    component.htmlElement.classList.add("current"); //TODO: Move this lines into component itself to ensure encapsulation
-
-    this._currentComponent = component;
-
-    this.components.push(this._currentComponent);
-
-    this.editorHtmlElement.insertBefore(
-      this._currentComponent.htmlElement,
-      this._previousComponent.htmlElement
-    );
-
+    this.components.push(component);
     this._size++;
+
+    this._previousComponent.insertBefore(this._currentComponent);
   }
 
   addComponentAfterCurrent(component: Component): void {
-    if (!component) {
-      throw new IllegalArgumentException("component cannot be null!");
-    }
-
     this._previousComponent = this._currentComponent.copy();
 
-    this._currentComponent?.htmlElement.classList.remove("current");
+    this.setCurrentComponent(component);
 
-    component.htmlElement.focus();
-    component.htmlElement.classList.add("current"); //TODO: Move this lines into component itself to ensure encapsulation
-
-    this._currentComponent = component;
-
-    this.components.push(this._currentComponent);
-
-    this._previousComponent.htmlElement.insertAdjacentElement(
-      "afterend",
-      this._currentComponent.htmlElement
-    );
-
+    this.components.push(component);
     this._size++;
+
+    this._previousComponent.insertAfter(this._currentComponent);
   }
 
   replaceComponent(newComponent: Component, oldComponent: Component): void {
@@ -127,14 +112,14 @@ export class Editor implements Tree {
 
     if (index == -1) {
       throw new Error(
-        `Component ${oldComponent.name} isn't exist on components list!`
+        `Component ${oldComponent.uuid} isn't exist on components list!`
       );
     }
 
     this.components[index] = newComponent;
     this.addComponentBeforeCurrent(newComponent);
-    newComponent.htmlElement.textContent = oldComponent.htmlElement.textContent;
-    oldComponent.htmlElement.remove();
+    newComponent.textContent = oldComponent.textContent;
+    oldComponent.remove();
   }
 
   findComponent(componentId: string): Component | undefined {
@@ -149,89 +134,89 @@ export class Editor implements Tree {
     return this._size;
   }
 
-  private click(): void {
-    this.editorHtmlElement.addEventListener("click", (e) => {
-      const clickedElement = e.target as HTMLElement;
-      const clickedComponent = this.components.find(
-        (c) => c.uuid == clickedElement.id
-      );
+  private changeCurrentElement(e: Event): void {
+    const clickedElement = e.target as HTMLElement;
+    const clickedComponent = this.components.find(
+      (c) => c.uuid == clickedElement.id
+    );
 
-      if (clickedComponent && clickedComponent == this._currentComponent) {
-        return;
-      }
+    if (!clickedComponent) {
+      return;
+    }
 
-      if (clickedComponent) {
-        this._currentComponent.htmlElement.classList.remove("current");
+    if (clickedComponent == this._currentComponent) {
+      return;
+    }
 
-        clickedComponent.htmlElement.focus();
-        clickedComponent.htmlElement.classList.add("current");
+    this._currentComponent.removeClass("current");
 
-        this._currentComponent = clickedComponent;
-      }
-    });
-  }
+    clickedComponent.addClass("current", true);
 
-  private arrowKeywords(): void {
-    this.editorHtmlElement.addEventListener("keydown", (e) => {
-      if (e.code == "ArrowUp") {
-        logger.debug("keydown event: ", e);
-      }
-    });
+    this._currentComponent = clickedComponent;
   }
 
   private enterKeyword(): void {
-    this.editorHtmlElement.addEventListener("keydown", (e) => {
-      if (e.key == "Enter" && !e.shiftKey) {
-        e.preventDefault();
-        const textContent = this._currentComponent.htmlElement.textContent;
+    const textContent = this._currentComponent?.textContent;
 
-        if (!textContent) {
-          return;
-        }
+    if (!textContent) {
+      return;
+    }
 
-        const length = textContent?.length as number;
+    const length = textContent?.length as number;
 
-        const posRange = SelectionApi.getCursorPosition();
-        if (!posRange) {
-          return;
-        }
+    const posRange = SelectionApi.getCursorPosition();
+    if (!posRange) {
+      return;
+    }
 
-        const text = new TextComponent(HtmlTag.P);
+    const text = new TextComponent(HtmlTag.P);
 
-        if (posRange.begin == 0) {
-          this.addComponentBeforeCurrent(text);
-        } else if (posRange.begin == length) {
-          this.addComponentAfterCurrent(text);
-        } else {
-          text.htmlElement.textContent = textContent?.substring(
-            posRange.begin,
-            length
-          );
+    if (posRange.begin == 0) {
+      this.addComponentBeforeCurrent(text);
+    } else if (posRange.begin == length) {
+      this.addComponentAfterCurrent(text);
+    } else {
+      text.html.textContent = textContent?.substring(posRange.begin, length);
 
-          this.addComponentAfterCurrent(text);
+      this.addComponentAfterCurrent(text);
 
-          if (this._previousComponent.htmlElement.textContent) {
-            const prevCompText =
-              this._previousComponent.htmlElement.textContent;
-            this._previousComponent.htmlElement.textContent =
-              prevCompText.substring(0, posRange.begin);
-          }
-        }
-
-        // set cursor position to new element
-        const range = document.createRange();
-        range.selectNodeContents(text.htmlElement);
-        range.collapse(false);
-        const selection = window.getSelection();
-        selection?.removeAllRanges();
-        selection?.addRange(range);
+      if (this._previousComponent.html.textContent) {
+        const prevCompText = this._previousComponent.html.textContent;
+        this._previousComponent.html.textContent = prevCompText.substring(
+          0,
+          posRange.begin
+        );
       }
-    });
+    }
+
+    // set cursor position to new element
+    SelectionApi.setCursorPositionTo(text.html);
   }
 
-  private blockDragging(): void {
-    this.editorHtmlElement.addEventListener("dragstart", (e) => {
-      e.preventDefault();
+  private preventDragging(e: Event): void {
+    e.preventDefault();
+  }
+
+  private addCommands() {
+    const command = new Command();
+    command.addCommand(
+      this._editorHtmlElement,
+      HtmlEvent.CLICK,
+      this.changeCurrentElement.bind(this)
+    );
+
+    command.addCommand(
+      this._editorHtmlElement,
+      HtmlEvent.DRAG_START,
+      this.preventDragging
+    );
+
+    command.addCommand(this._editorHtmlElement, HtmlEvent.KEY_DOWN, (e) => {
+      const keyBoardEvent = e as KeyboardEvent;
+      if (keyBoardEvent.key == "Enter" && !keyBoardEvent.shiftKey) {
+        e.preventDefault();
+        this.enterKeyword();
+      }
     });
   }
 }

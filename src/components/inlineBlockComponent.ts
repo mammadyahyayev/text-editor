@@ -1,4 +1,5 @@
 import { HtmlTag } from "../model/htmlTag";
+import { FontWeight, StyleTypes } from "../model/styleType";
 import { DomApi } from "../utils/domApi";
 import { Component } from "./component";
 
@@ -11,9 +12,9 @@ export class InlineBlockComponent extends Component {
 
   createComponent(tag: HtmlTag, value: string): void {
     if (tag == HtmlTag.STRONG) {
-      this.htmlElement = DomApi.createElement(HtmlTag.STRONG);
-      this.htmlElement.style.fontWeight = "bold";
-      this.htmlElement.textContent = value;
+      this.html = DomApi.createElement(HtmlTag.STRONG);
+      this.addStyle(StyleTypes.FONT_WEIGHT, FontWeight.BOLD);
+      this.textContent = value;
     }
   }
 }

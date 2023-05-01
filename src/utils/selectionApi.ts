@@ -23,4 +23,14 @@ export class SelectionApi {
 
     return null;
   }
+
+  static setCursorPositionTo(element: HTMLElement): void {
+    const range = document.createRange();
+    range.selectNodeContents(element);
+    range.collapse(false);
+
+    const selection = window.getSelection();
+    selection?.removeAllRanges();
+    selection?.addRange(range);
+  }
 }

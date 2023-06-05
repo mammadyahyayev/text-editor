@@ -9,7 +9,9 @@ export class Component {
   private _uuid: string;
   private _html: HTMLElement;
 
-  protected constructor() {
+  private _childrenCount: number = 0;
+
+  constructor() {
     this._uuid = UuidGenerator.generateUuid(Component.UUID_LENGTH);
   }
 
@@ -23,6 +25,39 @@ export class Component {
 
   public set html(html: HTMLElement) {
     this._html = html.cloneNode() as HTMLElement;
+  }
+
+  setName(name: string): void {
+    if (!name) return;
+
+    this._html.title = name;
+  }
+
+  setId(id: string): void {
+    if (!id) return;
+
+    this._html.id = id;
+  }
+
+  setClassName(className: string): void {
+    if (!className) return;
+
+    this._html.classList.add(className);
+  }
+
+  addChildren(children: Component[]): void {
+    if (!children) return;
+
+    children.forEach((child) => {
+      if (child._html) {
+        this._html.appendChild(child._html);
+        this._childrenCount++;
+      }
+    });
+  }
+
+  getChildrenCount(): number {
+    return this._childrenCount;
   }
 
   copy(): Component {

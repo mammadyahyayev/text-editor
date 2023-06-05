@@ -1,5 +1,5 @@
 import { Component } from "../components/component";
-import { TextComponent } from "../components/textComponent";
+import { ComponentBuilder } from "../components/componentBuilder";
 import { IllegalArgumentException } from "../exception/illegalArgumentException";
 import { HtmlEvent } from "../model/htmlEvent";
 import { HtmlTag } from "../model/htmlTag";
@@ -169,7 +169,7 @@ export class Editor implements Tree {
       return;
     }
 
-    const text = new TextComponent(HtmlTag.P);
+    const text = new ComponentBuilder().type(HtmlTag.P).build();
 
     if (posRange.begin == 0) {
       this.addComponentBeforeCurrent(text);

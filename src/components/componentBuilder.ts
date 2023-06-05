@@ -5,9 +5,9 @@ import { TextComponent } from "./textComponent";
 
 export class ComponentBuilder {
   private _type: HtmlTags;
-  private _componentName: string;
+  private _name: string;
   private _id: string;
-  private _componentClass: string;
+  private _className: string;
   private _children: Component[];
 
   constructor() {}
@@ -17,8 +17,8 @@ export class ComponentBuilder {
     return this;
   }
 
-  name(componentName: string): ComponentBuilder {
-    this._componentName = componentName;
+  name(name: string): ComponentBuilder {
+    this._name = name;
     return this;
   }
 
@@ -27,8 +27,8 @@ export class ComponentBuilder {
     return this;
   }
 
-  className(componentClassName: string): ComponentBuilder {
-    this._componentClass = componentClassName;
+  className(className: string): ComponentBuilder {
+    this._className = className;
     return this;
   }
 
@@ -42,13 +42,13 @@ export class ComponentBuilder {
 
     if (this._type === HtmlTag.P) {
       component = new TextComponent(this._type);
-    } else if(this._type === HeadingTags.H1) {
+    } else if (Object.values(HeadingTags).includes(this._type as HeadingTags)) {
       component = new HeaderComponent(this._type);
     }
 
     component.setId(this._id);
-    component.setName(this._componentName);
-    component.addClassName(this._componentClass);
+    component.setName(this._name);
+    component.addClassName(this._className);
     component.addChildren(this._children);
 
     return component;

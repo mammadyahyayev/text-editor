@@ -14,9 +14,9 @@ describe("component test", () => {
       .className("test-component")
       .build();
 
-    expect(component.html.id).toBe("test");
-    expect(component.html.title).toBe("Test Component");
-    expect(component.html.classList).toContain("test-component");
+    expect(component.id).toBe("test");
+    expect(component.name).toBe("Test Component");
+    expect(component.classList).toContain("test-component");
   });
 
   it("create a component with its children", () => {

@@ -24,7 +24,7 @@ export class HeaderComponent extends BlockComponent {
 
     this.html = DomApi.createElement(htmlTag) as HTMLHeadingElement;
     this.html.className = "header " + HeaderComponent.HEADER_ELEMENTS[htmlTag];
-    this.html.id = this.uuid;
+    this.html.id = this.id ? this.id : this.uuid;
   }
 
   override isValidHtmlElement(htmlElement: string): boolean {

@@ -17,7 +17,7 @@ export class TextComponent extends BlockComponent {
 
     this.html = DomApi.createElement(htmlTag) as HTMLParagraphElement;
     this.html.className = TextComponent.TEXT_CLASSNAME;
-    this.html.id = this.uuid;
+    this.html.id = this.id ? this.id : this.uuid;
   }
 
   override isValidHtmlElement(htmlElement: string): boolean {

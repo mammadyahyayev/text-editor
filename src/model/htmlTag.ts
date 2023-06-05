@@ -5,6 +5,7 @@ export enum HtmlTag {
   SPAN = "span",
   IMG = "img",
   STRONG = "strong",
+  TEXT_NODE = "text"
 }
 
 export enum HeadingTags {

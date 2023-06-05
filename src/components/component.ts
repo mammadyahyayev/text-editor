@@ -9,10 +9,15 @@ export class Component {
   private _uuid: string;
   private _html: HTMLElement;
 
+  private _id: string = "";
+  private _classList: string[] = [];
+  private _name: string = "";
+
   private _childrenCount: number = 0;
 
   constructor() {
     this._uuid = UuidGenerator.generateUuid(Component.UUID_LENGTH);
+    this._id = this._uuid;
   }
 
   public get uuid(): string {
@@ -31,18 +36,21 @@ export class Component {
     if (!name) return;
 
     this._html.title = name;
+    this._name = name;
   }
 
   setId(id: string): void {
     if (!id) return;
 
     this._html.id = id;
+    this._id = id;
   }
 
-  setClassName(className: string): void {
+  addClassName(className: string): void {
     if (!className) return;
 
     this._html.classList.add(className);
+    this._classList.push(className);
   }
 
   addChildren(children: Component[]): void {
@@ -76,6 +84,18 @@ export class Component {
     }
   }
 
+  get name(): string {
+    return this._name;
+  }
+
+  get id(): string {
+    return this._id
+  }
+
+  get classList(): string[] {
+    return this._classList;
+  }
+
   remove(): void {
     this._html.remove();
   }
@@ -106,10 +126,6 @@ export class Component {
 
   set textContent(text: string | null) {
     this._html.textContent = text ? text : "";
-  }
-
-  get classList(): string {
-    return this._html.classList.toString();
   }
 
   insertAfter(component: Component): void {

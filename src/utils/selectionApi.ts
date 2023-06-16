@@ -5,6 +5,12 @@ type CursorPosition = {
   end: number;
 };
 
+type Selection = {
+  text: string;
+  begin: number;
+  end: number;
+};
+
 export class SelectionApi {
   constructor() {
     logger.debug("selection api", window.getSelection());
@@ -16,8 +22,6 @@ export class SelectionApi {
       const range = selection.getRangeAt(0);
       const begin = range.startOffset;
       const end = range.endOffset;
-      logger.debug("begin => ", begin);
-      logger.debug("end => ", end);
       return { begin: begin, end: end };
     }
 
@@ -32,5 +36,29 @@ export class SelectionApi {
     const selection = window.getSelection();
     selection?.removeAllRanges();
     selection?.addRange(range);
+  }
+
+  static getSelection(): Selection | null {
+    const selection = window.getSelection();
+    if (selection) {
+      const selectedText = selection.toString();
+      const range = selection.getRangeAt(0);
+      const begin = range.startOffset;
+      const end = range.endOffset;
+      return selectedText !== "" ? { text: selectedText, begin, end } : null;
+    }
+
+    return null;
+  }
+
+  static getCurrentElementWhereCaretIs(): HTMLElement | null {
+    const selection = window.getSelection();
+    if (!selection) return null;
+
+    if (selection.anchorNode && selection.focusNode) {
+      return selection.anchorNode.parentElement;
+    }
+
+    return null;
   }
 }

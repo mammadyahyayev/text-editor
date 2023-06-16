@@ -3,6 +3,7 @@ import { ComponentBuilder } from "../components/componentBuilder";
 import { IllegalArgumentException } from "../exception/illegalArgumentException";
 import { HtmlEvent } from "../model/htmlEvent";
 import { HtmlTag } from "../model/htmlTag";
+import { logger } from "../utils/logger";
 import { SelectionApi } from "../utils/selectionApi";
 import { Command } from "./command";
 import { Tree } from "./tree";
@@ -20,7 +21,7 @@ export class Editor implements Tree {
   private constructor(editorId: string) {
     if (!editorId && editorId.trim() === "") {
       throw new IllegalArgumentException(
-        "Please specify editor element in your HTML file!"
+        "Please define editor element in your HTML file!"
       );
     }
 
@@ -62,7 +63,7 @@ export class Editor implements Tree {
 
   addComponent(component: Component): void {
     if (!component) {
-      throw new IllegalArgumentException("component cannot be null!");
+      throw new IllegalArgumentException("component must be not null!");
     }
 
     this.setCurrentComponent(component);
@@ -86,12 +87,11 @@ export class Editor implements Tree {
 
     this._previousComponent = this._currentComponent.copy();
 
-    this.setCurrentComponent(component);
-
     this.components.push(component);
     this._size++;
 
-    this._previousComponent.insertBefore(this._currentComponent);
+    this._previousComponent.insertBefore(component);
+    this.setCurrentComponent(component);
   }
 
   addComponentAfterCurrent(component: Component): void {
@@ -123,10 +123,14 @@ export class Editor implements Tree {
   }
 
   findComponent(componentId: string): Component | undefined {
-    return this.components.find((c) => c.uuid == componentId);
+    return this.components.find((c) => c.uuid === componentId);
   }
 
-  getFocusedComponent(): Component {
+  findComponentIndex(componentId: string): number {
+    return this.components.findIndex((c) => c.uuid === componentId);
+  }
+
+  getCurrentComponent(): Component {
     return this._currentComponent;
   }
 
@@ -158,10 +162,6 @@ export class Editor implements Tree {
   private enterKeyword(): void {
     const textContent = this._currentComponent?.textContent;
 
-    if (!textContent) {
-      return;
-    }
-
     const length = textContent?.length as number;
 
     const posRange = SelectionApi.getCursorPosition();
@@ -171,12 +171,15 @@ export class Editor implements Tree {
 
     const text = new ComponentBuilder().type(HtmlTag.P).build();
 
-    if (posRange.begin == 0) {
+    logger.debug("PosRange", posRange);
+    if (posRange.begin === 0 && posRange.end === 0 && textContent) {
       this.addComponentBeforeCurrent(text);
     } else if (posRange.begin == length) {
       this.addComponentAfterCurrent(text);
     } else {
-      text.html.textContent = textContent?.substring(posRange.begin, length);
+      text.html.textContent = textContent
+        ? textContent.substring(posRange.begin, length)
+        : "";
 
       this.addComponentAfterCurrent(text);
 
@@ -197,6 +200,32 @@ export class Editor implements Tree {
     e.preventDefault();
   }
 
+  private onCaretPositionChanged(e: KeyboardEvent) {
+    const currentElement = SelectionApi.getCurrentElementWhereCaretIs();
+    if (!currentElement) return;
+
+    let component = null;
+    let componentIndex = -1;
+    if (e.key === "ArrowUp") {
+      componentIndex = this.findComponentIndex(currentElement.id);
+
+      const prevComponentIndex =
+        componentIndex - 1 <= 0 ? 0 : componentIndex - 1;
+
+      component = this.components[prevComponentIndex];
+    } else if (e.key === "ArrowDown") {
+      componentIndex = this.findComponentIndex(currentElement.id);
+
+      const nextComponentIndex = componentIndex + 1 >= this.size()
+          ? this.size() - 1
+          : componentIndex + 1;
+
+      component = this.components[nextComponentIndex];
+    }
+
+    if (component) this.setCurrentComponent(component);
+  }
+
   private addCommands() {
     const command = new Command();
     command.addCommand(
@@ -213,10 +242,14 @@ export class Editor implements Tree {
 
     command.addCommand(this._editorHtmlElement, HtmlEvent.KEY_DOWN, (e) => {
       const keyBoardEvent = e as KeyboardEvent;
-      if (keyBoardEvent.key == "Enter" && !keyBoardEvent.shiftKey) {
+      if (keyBoardEvent.key === "Enter" && !keyBoardEvent.shiftKey) {
         e.preventDefault();
         this.enterKeyword();
       }
+    });
+
+    command.addCommand(this._editorHtmlElement, HtmlEvent.KEY_DOWN, (e) => {
+      this.onCaretPositionChanged(e as KeyboardEvent);
     });
   }
 }

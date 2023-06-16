@@ -10,4 +10,12 @@ export class DomApi {
     const element = document.createElement(tag.toString());
     return element;
   }
+
+  public static createTextNode(value: string): Node {
+    if (!value) {
+      throw new IllegalArgumentException("value cannot be null or empty");
+    }
+
+    return document.createTextNode(value);
+  }
 }

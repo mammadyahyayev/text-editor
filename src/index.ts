@@ -45,30 +45,32 @@ insertTextElementBtn.addEventListener("click", () => {
 start();
 
 //#region Alignment Operations
+
 leftAlignTextElementBtn.addEventListener("click", () => {
   const editor = Editor.getInstance("editor");
-  const focusedComponent = editor.getFocusedComponent();
+  const focusedComponent = editor.getCurrentComponent();
   focusedComponent.addStyle(StyleTypes.TEXT_ALIGN, AlignmentTypes.LEFT);
 });
 
 centerAlignTextElementBtn.addEventListener("click", () => {
   const editor = Editor.getInstance("editor");
-  const focusedComponent = editor.getFocusedComponent();
+  const focusedComponent = editor.getCurrentComponent();
   focusedComponent.addStyle(StyleTypes.TEXT_ALIGN, AlignmentTypes.CENTER);
 });
 
 rightAlignTextElementBtn.addEventListener("click", () => {
   const editor = Editor.getInstance("editor");
-  const focusedComponent = editor.getFocusedComponent();
+  const focusedComponent = editor.getCurrentComponent();
   focusedComponent.addStyle(StyleTypes.TEXT_ALIGN, AlignmentTypes.RIGHT);
 });
 //#endregion
 
 //#region Headers
+
 h1ElementBtn.addEventListener("click", () => {
   const editor = Editor.getInstance("editor");
 
-  const focusedComponent = editor.getFocusedComponent();
+  const focusedComponent = editor.getCurrentComponent();
   const h1Component = new ComponentBuilder()
     .type(HeadingTags.H1)
     .id(focusedComponent.id)
@@ -80,7 +82,7 @@ h1ElementBtn.addEventListener("click", () => {
 h2ElementBtn.addEventListener("click", () => {
   const editor = Editor.getInstance("editor");
 
-  const focusedComponent = editor.getFocusedComponent();
+  const focusedComponent = editor.getCurrentComponent();
   const h2Component = new ComponentBuilder()
     .type(HeadingTags.H2)
     .id(focusedComponent.id)
@@ -92,7 +94,7 @@ h2ElementBtn.addEventListener("click", () => {
 h3ElementBtn.addEventListener("click", () => {
   const editor = Editor.getInstance("editor");
 
-  const focusedComponent = editor.getFocusedComponent();
+  const focusedComponent = editor.getCurrentComponent();
   const h3Component = new ComponentBuilder()
     .type(HeadingTags.H3)
     .id(focusedComponent.id)
@@ -100,6 +102,7 @@ h3ElementBtn.addEventListener("click", () => {
 
   editor.replaceComponent(h3Component, focusedComponent);
 });
+
 //#endregion
 
 //#region Text Format Operators

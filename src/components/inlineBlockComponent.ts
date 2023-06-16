@@ -11,10 +11,10 @@ export class InlineBlockComponent extends Component {
   }
 
   createComponent(tag: HtmlTag, value: string): void {
-    if (tag == HtmlTag.STRONG) {
+    if (tag === HtmlTag.STRONG) {
       this.html = DomApi.createElement(HtmlTag.STRONG);
       this.addStyle(StyleTypes.FONT_WEIGHT, FontWeight.BOLD);
       this.textContent = value;
-    }
+    } 
   }
 }

@@ -201,7 +201,7 @@ export class Editor implements Tree {
   }
 
   private onCaretPositionChanged(e: KeyboardEvent) {
-    const currentElement = SelectionApi.getCurrentElementWhereCaretIs();
+    const currentElement = SelectionApi.getFocusedElement();
     if (!currentElement) return;
 
     let component = null;

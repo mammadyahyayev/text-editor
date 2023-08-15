@@ -16,6 +16,12 @@ export class SelectionApi {
     logger.debug("selection api", window.getSelection());
   }
 
+  /**
+   * Returns the position of the cursor to determine
+   * which element the cursor is currently on. 
+   * 
+   * @returns cursor position with beginning and end index
+   */
   static getCursorPosition(): CursorPosition | null {
     const selection = window.getSelection();
     if (selection?.rangeCount) {
@@ -28,6 +34,11 @@ export class SelectionApi {
     return null;
   }
 
+  /**
+   * Set cursor position to given HTMLElement.
+   * 
+   * @param element an HTMLElement
+   */
   static setCursorPositionTo(element: HTMLElement): void {
     const range = document.createRange();
     range.selectNodeContents(element);
@@ -38,6 +49,12 @@ export class SelectionApi {
     selection?.addRange(range);
   }
 
+  /**
+   * Give Selection object which contains text, beginning and 
+   * ending indices.
+   * 
+   * @returns a Selection object 
+   */
   static getSelection(): Selection | null {
     const selection = window.getSelection();
     if (selection) {
@@ -51,7 +68,12 @@ export class SelectionApi {
     return null;
   }
 
-  static getCurrentElementWhereCaretIs(): HTMLElement | null {
+  /**
+   * Retrieves element where the caret is currently on. 
+   * 
+   * @returns current HTMLElement where caret is currently on
+   */
+  static getFocusedElement(): HTMLElement | null {
     const selection = window.getSelection();
     if (!selection) return null;
 

@@ -2,6 +2,12 @@ export class UuidGenerator {
   private static readonly SYMBOLS: string =
     "abcdefghijklmnopqrstuwxvyz123456789";
 
+    /**
+     * Generates random uuid from numbers and letters.
+     * 
+     * @param length indicates how many symbols will exist in uuid 
+     * @returns a randomly generated uuid 
+     */
   public static generateUuid(length: number): string {
     let uuid: string = "";
 
